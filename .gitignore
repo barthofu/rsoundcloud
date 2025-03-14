@@ -1,0 +1,19 @@
+# env
+.direnv
+
+# build
+target/
+
+# secrets
+.env
+
+# ide
+.idea/
+
+# data
+data/
+!data/.gitkeep
+
+# misc
+tmp/
+core
