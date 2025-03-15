@@ -21,8 +21,12 @@
             pre-commit
             rustPackages.clippy
             rust-analyzer
+
+            pkg-config
+            openssl
           ];
           RUST_SRC_PATH = rustPlatform.rustLibSrc;
+          PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
 
           shellHook = ''
             export PATH=$PWD/assets/bin:$HOME/.cargo/bin:$PATH
