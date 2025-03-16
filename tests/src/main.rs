@@ -1,4 +1,4 @@
-use rsoundcloud::{api::me::MeApi, client::SoundCloudClient};
+use rsoundcloud::{api::{me::MeApi, search::SearchApi}, client::SoundCloudClient, utils::schemas::CollectionParams};
 
 
 #[tokio::main]
@@ -9,7 +9,12 @@ async fn main(){
 
     // let res = client.resolve("https://soundcloud.com/itsydg/dom-dolla-girl-ydg-remix").await.unwrap();
     // let res = client.get_me().await.unwrap();
-    // let res = client.get_my_history(Some(1), None).await.unwrap();
-    let res = client.get_my_stream(Some(1), None).await.unwrap();
+    // let res = client.get_my_history(CollectionParams::new(Some(1), None)).await.unwrap();
+    // let res = client.get_my_stream(CollectionParams::new(Some(1), None)).await.unwrap();
+    // let res = client.search("gokstad".to_string(), CollectionParams::new(Some(1), None)).await.unwrap();
+    // let res = client.search_track("gokstad".to_string(), CollectionParams::new(Some(1), None)).await.unwrap();
+    // let res = client.search_user("dazed".to_string(), CollectionParams::new(Some(1), None)).await.unwrap();
+    // let res = client.search_playlist("euphoria part. 4".to_string(), CollectionParams::new(Some(1), None)).await.unwrap();
+    let res = client.search_album("outre-acid 2".to_string(), CollectionParams::new(Some(1), None)).await.unwrap();
     println!("{:#?}", res);
 }

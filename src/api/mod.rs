@@ -8,6 +8,7 @@ use crate::{errors::{convert_serde_path_to_error, ClientError}, ClientResult};
 pub mod tracks;
 pub mod misc;
 pub mod me;
+pub mod search;
 
 // =============================================================================
 // Generic result
@@ -68,9 +69,9 @@ pub(crate) fn convert_search_items(input: &str) -> ClientResult<Vec<SearchItem>>
 }
 
 fn convert_search_item_value(json_value: &Value) -> ClientResult<SearchItem> {
-    let item_type = json_value.get("type")
+    let item_type = json_value.get("kind")
         .and_then(|v| v.as_str())
-        .ok_or_else(|| ClientError::Custom("No `type` field in the JSON".to_string()))?;
+        .ok_or_else(|| ClientError::Custom("No `kind` field in the JSON".to_string()))?;
 
     match item_type {
         "track" => deserialize(json_value)

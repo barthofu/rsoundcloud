@@ -1,0 +1,70 @@
+use async_trait::async_trait;
+use http::build_query;
+use models::SearchItem;
+
+use crate::{client::SoundCloudClient, utils::schemas::CollectionParams, ClientResult};
+
+use super::convert_search_items;
+
+#[async_trait]
+pub trait SearchApi {
+
+    /// Search for users, tracks and playlists
+    async fn search(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>>;
+    
+    /// Search for tracks
+    async fn search_track(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>>;
+    
+    /// Search for users
+    async fn search_user(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>>;
+    
+    /// Search for albums
+    async fn search_album(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>>;
+    
+    /// Search for playlists
+    async fn search_playlist(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>>;
+}
+
+#[async_trait]
+trait SearchApiUtils {
+
+    async fn generic_search(&self, query: String, collection_params: CollectionParams, path: &str) -> ClientResult<Vec<SearchItem>>;
+}
+
+#[async_trait]
+impl SearchApi for SoundCloudClient {
+
+    async fn search(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>> {
+        self.generic_search(query, collection_params, "/search").await
+    }
+
+    async fn search_track(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>> {
+        self.generic_search(query, collection_params, "/search/tracks").await
+    }
+
+    async fn search_user(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>> {
+        self.generic_search(query, collection_params, "/search/users").await
+    }
+
+    async fn search_album(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>> {
+        self.generic_search(query, collection_params, "/search/albums").await
+    }
+
+    async fn search_playlist(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>> {
+        self.generic_search(query, collection_params, "/search/playlists_without_albums").await
+    }
+}
+
+#[async_trait]
+impl SearchApiUtils for SoundCloudClient {
+
+    async fn generic_search(&self, query: String, collection_params: CollectionParams, path: &str) -> ClientResult<Vec<SearchItem>> {
+        let mut query_params = build_query([
+            ("q", query.as_str()),
+        ]);
+        collection_params.add_to_query(&mut query_params);
+
+        let result = self.api_get(path, query_params).await?;
+        convert_search_items(&result)
+    }
+}
