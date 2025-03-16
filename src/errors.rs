@@ -1,4 +1,5 @@
 use http::HttpError;
+use serde_json::Error;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -17,12 +18,21 @@ pub enum ClientError {
     // Parse
     #[error("json parse error: {0}")]
     ParseJson(#[from] serde_json::Error),
+    #[error("json parse error at `{field_path}`: {error}")]
+    ParseJsonWithContext {
+        field_path: String,
+        error: String,
+    },
     #[error("url parse error: {0}")]
     ParseUrl(#[from] url::ParseError),
 
     // IO
     #[error("input/output error: {0}")]
     Io(#[from] std::io::Error),
+
+    // Auth
+    #[error("authentication required using oauth token")]
+    ShouldBeAuthenticated(),
 
     // Other
     #[error("custom error: {0}")]
@@ -35,5 +45,16 @@ pub enum ClientError {
 impl From<HttpError> for ClientError {
     fn from(err: HttpError) -> Self {
         Self::Http(Box::new(err))
+    }
+}
+
+// =============================================================================
+// Utils functions
+// =============================================================================
+
+pub fn convert_serde_path_to_error(e: serde_path_to_error::Error<Error>) -> ClientError {
+    ClientError::ParseJsonWithContext {
+        error: e.to_string(),
+        field_path: e.path().to_string(),
     }
 }

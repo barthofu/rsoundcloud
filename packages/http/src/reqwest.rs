@@ -161,9 +161,8 @@ impl BaseHttpClient for ReqwestClient {
         &self,
         url: &str,
         headers: Option<&Headers>,
-        payload: &Value,
     ) -> Result<String, Self::Error> {
-        self.request(Method::DELETE, url, headers, |req| req.json(payload))
+        self.request(Method::DELETE, url, headers, |req| req)
             .await
     }
 }

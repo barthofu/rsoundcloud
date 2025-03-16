@@ -2,6 +2,7 @@ use errors::ClientError;
 
 pub mod client;
 pub mod errors;
+#[macro_use]
 pub mod utils;
 pub mod api;
 

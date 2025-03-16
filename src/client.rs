@@ -55,10 +55,14 @@ impl SoundCloudClient {
     /// Concat the base URL with the endpoint URL
     fn get_url(&self, url: &str) -> String {
         let mut base = API_BASE_URL.to_string();
-        if !base.ends_with('/') {
+        if !base.ends_with('/') && !url.starts_with('/') {
             base.push('/');
         }
         base + url
+    }
+
+    pub fn is_authenticated(&self) -> bool {
+        self.auth_token.is_some()
     }
 
     // ====================
@@ -87,10 +91,10 @@ impl SoundCloudClient {
     }
 
     /// Convenience method to send DELETE requests related to an endpoint in the API.
-    pub async fn api_delete(&self, url: &str, body: &Value) -> ClientResult<String> {
+    pub async fn api_delete(&self, url: &str) -> ClientResult<String> {
         let url = self.get_url(url);
         let headers = self.get_headers();
-        Ok(self.http_client.delete(&url, Some(&headers), body).await?)
+        Ok(self.http_client.delete(&url, Some(&headers)).await?)
     }
 
     // ====================

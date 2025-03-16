@@ -60,6 +60,5 @@ pub trait BaseHttpClient: Send + Default + Clone + fmt::Debug {
         &self,
         url: &str,
         headers: Option<&Headers>,
-        payload: &Value,
     ) -> Result<String, Self::Error>;
 }

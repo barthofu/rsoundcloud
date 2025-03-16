@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 use chrono::{DateTime, Utc};
 
-use crate::{user::{BasicUser, User}, visual::Visuals};
+use crate::{user::{BasicUser, UltraBasicUser, User}, visual::Visuals};
 
 // ==================================================
 // Track
@@ -37,6 +37,7 @@ pub struct BaseTrack {
     pub user_id: i32,
     pub display_date: String,
 
+    // Track specific fields
     pub caption: Option<String>,
     pub commentable: bool,
     pub comment_count: Option<i32>,
@@ -79,7 +80,7 @@ pub struct Track {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BasicTrack {
-    pub user: BasicUser,
+    pub user: UltraBasicUser,
     #[serde(flatten)]
     pub track: BaseTrack,
 }
@@ -121,7 +122,7 @@ pub struct CommentTrack {
     pub track_authorization: String,
     pub monetization_model: String,
     pub policy: String,
-    pub user: BasicUser,
+    pub user: UltraBasicUser,
 }
 
 // ==================================================
