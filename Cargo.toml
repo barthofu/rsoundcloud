@@ -13,6 +13,10 @@ keywords = ["soundcloud", "api"]
 categories = ["api-bindings", "multimedia::audio"]
 edition = "2021"
 
+[profile.release]
+strip = true
+lto = true
+
 [dependencies]
 reqwest = { version = "0.12.14", default-features = false, features = ["json", "socks", "rustls-tls"] }
 regex = "1.11.1"
