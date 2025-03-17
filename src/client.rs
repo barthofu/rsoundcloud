@@ -97,7 +97,7 @@ impl SoundCloudClient {
         let headers = self.get_headers();
         Ok(self.http_client.delete(&url, Some(&headers)).await?)
     }
-    
+
     // ====================
     // Auth
     // ====================
@@ -145,5 +145,17 @@ impl SoundCloudClient {
         
         Ok(client_id)
     }
-    
 }
+
+// pub trait SoundCloudClientUtils {
+
+//     fn is_track_url(url: &str) -> bool;
+//     fn is_playlist_url(url: &str) -> bool;
+//     fn is_user_url(url: &str) -> bool;
+// }
+
+// impl SoundCloudClientUtils for SoundCloudClient {
+
+//     fn is_track_url(url: &str) -> bool {
+//         url.contains("sound
+// }

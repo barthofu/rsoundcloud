@@ -12,6 +12,8 @@ pub enum ClientError {
     InvalidId,
     #[error("not found")]
     NotFound,
+    #[error("invalid url")]
+    InvalidUrl,
 
     // Note that this type is boxed because its size might be very large in
     // comparison to the rest. For more information visit:

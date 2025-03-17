@@ -1,5 +1,14 @@
 use http::Query;
 
+pub enum ResourceId {
+    /// Id (e.g: `123456`)
+    Id(u64),
+    /// Full url (e.g: `https://soundcloud.com/shmanii/beg-me-to-come-over`)
+    Url(String),
+    /// "username/title" (e.g: `shmanii/beg-me-to-come-over``)
+    Uri(String),
+}
+
 // =============================================================================
 // Collection Params
 // =============================================================================

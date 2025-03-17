@@ -1,5 +1,5 @@
 use models::SearchItem;
-use rsoundcloud::{api::{me::MeApi, playlists::PlaylistsApi, search::SearchApi, tracks::TracksApi, users::UsersApi}, client::SoundCloudClient, utils::schemas::CollectionParams};
+use rsoundcloud::{api::{me::MeApi, misc::MiscApi, playlists::PlaylistsApi, search::SearchApi, tracks::TracksApi, users::UsersApi}, client::SoundCloudClient, utils::schemas::{CollectionParams, ResourceId}};
 
 const CLIENT_ID: &str = "f1TFyuaI8LX1Ybd1zvQRX8GpsNYcQ3Y5";
 const AUTH_TOKEN: &str = "2-296379-629391111-bZ3wiEjUEmNfgt";
@@ -15,7 +15,7 @@ async fn main() {
         Some(AUTH_TOKEN.to_string())).await.unwrap();
 
     // // Misc
-    // let res = client.resolve("https://soundcloud.com/itsydg/dom-dolla-girl-ydg-remix").await.unwrap();
+    // let res = client.resolve("https://on.soundcloud.com/Te19bUszQTiskJLF7").await.unwrap();
     
     // // Misc
     // let res = client.get_me().await.unwrap();
@@ -36,13 +36,13 @@ async fn main() {
     // let res = client.create_playlist("test3".to_string(), models::playlist::PlaylistSharing::Private, vec![TRACK_ID]).await.unwrap();
     
     // // Tracks
-    // let res = client.get_track(TRACK_ID).await.unwrap();
-    // let res = client.get_track_albums(TRACK_ID).await.unwrap();
-    // let res = client.get_track_playlists(TRACK_ID).await.unwrap();
+    // let res = client.get_track(ResourceId::Uri("shmanii/beg-me-to-come-over".to_string())).await.unwrap();
+    // let res = client.get_track_albums(ResourceId::Id(TRACK_ID)).await.unwrap();
+    // let res = client.get_track_playlists(ResourceId::Id(TRACK_ID)).await.unwrap();
     // let res = client.get_track_comments(TRACK_ID, None).await.unwrap();
-    // let res = client.get_track_likers(TRACK_ID).await.unwrap();
-    // let res = client.get_track_reposters(TRACK_ID).await.unwrap();
-    // let res = client.get_related_tracks(TRACK_ID).await.unwrap();
+    // let res = client.get_track_likers(ResourceId::Id(TRACK_ID)).await.unwrap();
+    // let res = client.get_track_reposters(ResourceId::Id(TRACK_ID)).await.unwrap();
+    // let res = client.get_related_tracks(ResourceId::Id(TRACK_ID)).await.unwrap();
     // let res = client.get_track_original_download_link(TRACK_ID, None).await.unwrap();
     
     // // Users
@@ -66,5 +66,5 @@ async fn main() {
     // let res = client.get_conversation_messages(USER_ID, 391257564).await.unwrap();
     // let res = client.get_unread_conversations(USER_ID).await.unwrap();
 
-    // println!("{:#?}", res);
+    println!("{:#?}", res);
 }

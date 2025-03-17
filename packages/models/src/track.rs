@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 use chrono::{DateTime, Utc};
 
-use crate::{user::{BasicUser, UltraBasicUser, User}, visual::Visuals};
+use crate::{user::{UltraBasicUser, User}, visual::Visuals};
 
 // ==================================================
 // Track
