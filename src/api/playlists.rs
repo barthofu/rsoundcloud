@@ -1,6 +1,6 @@
 use async_trait::async_trait;
 
-use crate::{client::SoundCloudClient, http::Query, models::{playlist::{BasicAlbumPlaylist, PlaylistSharing}, user::User}, need_authentication, utils::schemas::ResourceId, ClientResult};
+use crate::{client::SoundCloudClient, http::Query, models::{playlist::BasicAlbumPlaylist, user::User}, utils::schemas::ResourceId, ClientResult};
 
 use super::{convert_collection, convert_result, misc::MiscApi};
 
@@ -15,11 +15,6 @@ pub trait PlaylistsApi {
 
     /// Get people who reposted this playlist.
     async fn get_playlist_reposters(&self, playlist_id: ResourceId) -> ClientResult<Vec<User>>;
-
-    /// Create a new playlist.
-    /// ! Needs authentication
-    /// ! Not implemented yet
-    async fn create_playlist(&self, title: String, sharing: PlaylistSharing, tracks_ids: Vec<u64>) -> ClientResult<BasicAlbumPlaylist>;
 
     // Utils
 
@@ -51,23 +46,6 @@ impl PlaylistsApi for SoundCloudClient {
         convert_collection(&result)
     }
 
-    async fn create_playlist(&self, _title: String, _sharing: PlaylistSharing, _tracks_ids: Vec<u64>) -> ClientResult<BasicAlbumPlaylist> {
-        return Err(crate::errors::ClientError::Custom("Not implemented yet".to_string()));
-        need_authentication!(self);
-    
-        // let uri = format!("/playlists");
-        // let body = json!({
-        //     "playlist": {
-        //         "title": title,
-        //         "sharing": sharing,
-        //         "tracks": tracks_ids
-        //     }
-        // });
-
-        // let result = self.api_post(&uri, Query::new(), &body).await?;
-        // convert_result(&result)
-    }
-
     async fn extract_playlist_id(&self, playlist_id: ResourceId) -> ClientResult<u64> {
         match playlist_id {
             ResourceId::Id(id) => Ok(id),
@@ -81,6 +59,4 @@ impl PlaylistsApi for SoundCloudClient {
             }
         }
     }
-
-    
 }
