@@ -18,6 +18,7 @@ pub mod like;
 pub mod playlist;
 pub mod response;
 pub mod stream;
+pub mod web_profile;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum SearchItem {

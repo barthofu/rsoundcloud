@@ -51,6 +51,12 @@ pub enum ReqwestError {
     StatusCode(reqwest::Response),
 }
 
+impl ReqwestError {
+    pub fn status(&self) -> Option<reqwest::StatusCode> {
+        self.status()
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct ReqwestClient {
     /// reqwest needs an instance of its client to perform requests.

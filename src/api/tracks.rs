@@ -1,8 +1,8 @@
 use async_trait::async_trait;
 use http::{build_query, Query};
-use models::{comment::BasicComment, graphql::CommentWithInteractions, playlist::BasicAlbumPlaylist, track::{BasicTrack, Track}, user::User};
+use models::{comment::BasicComment, playlist::BasicAlbumPlaylist, track::BasicTrack, user::User};
 
-use crate::{client::SoundCloudClient, need_authentication, ClientResult};
+use crate::{client::SoundCloudClient, errors::{convert_404_to_invalid_id, ClientError}, need_authentication, ClientResult};
 
 use super::{convert_collection, convert_result};
 
@@ -38,7 +38,6 @@ pub trait TracksApi {
     async fn get_related_tracks(&self, track_id: u64) -> ClientResult<Vec<BasicTrack>>;
 
     /// Get track original download link. If track is private, requires secret token to be provided (last part of secret URL).
-    /// Returns 404 if track has no original download link.
     /// Requires authentication.
     async fn get_track_original_download_link(&self, track_id: u64, secret_token: Option<String>) -> ClientResult<String>;
 }
@@ -49,7 +48,7 @@ impl TracksApi for SoundCloudClient {
     async fn get_track(&self, track_id: u64) -> ClientResult<BasicTrack> {
         let uri = format!("/tracks/{}", track_id);
         
-        let result = self.api_get(&uri, Query::new()).await?;
+        let result = self.api_get(&uri, Query::new()).await.map_err(convert_404_to_invalid_id)?;
         convert_result(&result)
     }
 
@@ -71,14 +70,14 @@ impl TracksApi for SoundCloudClient {
     async fn get_track_albums(&self, track_id: u64) -> ClientResult<Vec<BasicAlbumPlaylist>> {
         let uri = format!("/tracks/{}/albums", track_id);
         
-        let result = self.api_get(&uri, Query::new()).await?;
+        let result = self.api_get(&uri, Query::new()).await.map_err(convert_404_to_invalid_id)?;
         convert_collection(&result)
     }
 
     async fn get_track_playlists(&self, track_id: u64) -> ClientResult<Vec<BasicAlbumPlaylist>> {
         let uri = format!("/tracks/{}/playlists_without_albums", track_id);
         
-        let result = self.api_get(&uri, Query::new()).await?;
+        let result = self.api_get(&uri, Query::new()).await.map_err(convert_404_to_invalid_id)?;
         convert_collection(&result)
     }
 
@@ -88,39 +87,48 @@ impl TracksApi for SoundCloudClient {
             ("threaded", threaded.unwrap_or(0).to_string().as_str())
         ]);
         
-        let result = self.api_get(&uri, query_params).await?;
+        let result = self.api_get(&uri, query_params).await.map_err(convert_404_to_invalid_id)?;
         convert_collection(&result)
     }
 
     async fn get_track_likers(&self, track_id: u64) -> ClientResult<Vec<User>> {
         let uri = format!("/tracks/{}/likers", track_id);
         
-        let result = self.api_get(&uri, Query::new()).await?;
+        let result = self.api_get(&uri, Query::new()).await.map_err(convert_404_to_invalid_id)?;
         convert_collection(&result)
     }
 
     async fn get_track_reposters(&self, track_id: u64) -> ClientResult<Vec<User>> {
         let uri = format!("/tracks/{}/reposters", track_id);
         
-        let result = self.api_get(&uri, Query::new()).await?;
+        let result = self.api_get(&uri, Query::new()).await.map_err(convert_404_to_invalid_id)?;
         convert_collection(&result)
     }
 
     async fn get_related_tracks(&self, track_id: u64) -> ClientResult<Vec<BasicTrack>> {
         let uri = format!("/tracks/{}/related", track_id);
         
-        let result = self.api_get(&uri, Query::new()).await?;
+        let result = self.api_get(&uri, Query::new()).await.map_err(convert_404_to_invalid_id)?;
         convert_collection(&result)
     }
 
     async fn get_track_original_download_link(&self, track_id: u64, secret_token: Option<String>) -> ClientResult<String> {
+        need_authentication!(self);
         let uri = format!("/tracks/{}/download", track_id);
         let mut query_params = Query::new();
         if let Some(secret_token) = secret_token {
             query_params.insert("secret_token".to_string(), secret_token);
         }
         
-        let result = self.api_get(&uri, query_params).await?;
+        let result = self.api_get(&uri, query_params).await
+            .map_err(|e| {
+                if let ClientError::Http(ref http_err) = e {
+                    if http_err.status() == Some(reqwest::StatusCode::NOT_FOUND) {
+                        return ClientError::Custom("Invalid id or track has no original download link".to_string());
+                    }
+                }
+                e
+            })?;
         convert_result(&result)
     }
     

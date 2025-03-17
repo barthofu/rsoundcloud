@@ -1,11 +1,12 @@
 use models::SearchItem;
-use rsoundcloud::{api::{me::MeApi, playlists::PlaylistsApi, search::SearchApi, tracks::TracksApi}, client::SoundCloudClient, utils::schemas::CollectionParams};
+use rsoundcloud::{api::{me::MeApi, playlists::PlaylistsApi, search::SearchApi, tracks::TracksApi, users::UsersApi}, client::SoundCloudClient, utils::schemas::CollectionParams};
 
 const CLIENT_ID: &str = "f1TFyuaI8LX1Ybd1zvQRX8GpsNYcQ3Y5";
 const AUTH_TOKEN: &str = "2-296379-629391111-bZ3wiEjUEmNfgt";
 
 const TRACK_ID: u64 = 635602308;
 const PLAYLIST_ID: u64 = 1974519144;
+const USER_ID: u64 = 629391111;
 
 #[tokio::main]
 async fn main() {
@@ -42,7 +43,28 @@ async fn main() {
     // let res = client.get_track_likers(TRACK_ID).await.unwrap();
     // let res = client.get_track_reposters(TRACK_ID).await.unwrap();
     // let res = client.get_related_tracks(TRACK_ID).await.unwrap();
-    let res = client.get_track_original_download_link(TRACK_ID, None).await.unwrap();
+    // let res = client.get_track_original_download_link(TRACK_ID, None).await.unwrap();
     
-    println!("{:#?}", res);
+    // // Users
+    // let res = client.get_user(USER_ID).await.unwrap();
+    // let res = client.get_user_by_username("bartho-az").await.unwrap();
+    // let res = client.get_user_comments(USER_ID).await.unwrap();
+    // let res = client.get_user_emails(USER_ID).await.unwrap();
+    // let res = client.get_user_featured_profiles(USER_ID).await.unwrap();
+    // let res = client.get_user_followers(USER_ID).await.unwrap();
+    // let res = client.get_user_followings(USER_ID).await.unwrap();
+    // let res = client.get_user_likes(USER_ID).await.unwrap();
+    // let res = client.get_user_related_artists(USER_ID).await.unwrap();
+    // let res = client.get_user_reposts(USER_ID).await.unwrap();
+    // let res = client.get_user_streams(USER_ID).await.unwrap();
+    // let res = client.get_user_tracks(USER_ID).await.unwrap();
+    // let res = client.get_user_popular_tracks(USER_ID).await.unwrap();
+    // let res = client.get_user_albums(USER_ID).await.unwrap();
+    // let res = client.get_user_playlists(USER_ID).await.unwrap();
+    // let res = client.get_user_links(USER_ID).await.unwrap();
+    // let res = client.get_user_conversations(USER_ID).await.unwrap();
+    // let res = client.get_conversation_messages(USER_ID, 391257564).await.unwrap();
+    // let res = client.get_unread_conversations(USER_ID).await.unwrap();
+
+    // println!("{:#?}", res);
 }

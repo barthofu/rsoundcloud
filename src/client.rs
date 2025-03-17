@@ -1,9 +1,10 @@
 use http::{BaseHttpClient, Headers, HttpClient, Query};
 use reqwest::header;
 use regex::Regex;
+use serde::de::DeserializeOwned;
 use serde_json::Value;
 
-use crate::{errors::ClientError, ClientResult, API_BASE_URL, DEFAULT_USER_AGENT};
+use crate::{api::{convert_collection, convert_result}, errors::{convert_404_to_invalid_id, ClientError}, ClientResult, API_BASE_URL, DEFAULT_USER_AGENT};
 
 pub struct SoundCloudClient {
     http_client: HttpClient,
@@ -96,7 +97,7 @@ impl SoundCloudClient {
         let headers = self.get_headers();
         Ok(self.http_client.delete(&url, Some(&headers)).await?)
     }
-
+    
     // ====================
     // Auth
     // ====================
