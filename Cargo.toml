@@ -13,23 +13,17 @@ keywords = ["soundcloud", "api"]
 categories = ["api-bindings", "multimedia::audio"]
 edition = "2021"
 
-[workspace]
-members = [
-    "packages/http",
-    "packages/models", "tests",
-]
-
 [dependencies]
-http = { path = "packages/http" }
-models = { path = "packages/models" }
-
-reqwest = "0.12.14"
+reqwest = { version = "0.12.14", default-features = false, features = ["json", "socks", "rustls-tls"] }
 regex = "1.11.1"
 thiserror = "2.0.12"
+serde = { version = "1.0.219", features = ["derive"] }
 serde_json = "1.0.140"
-serde = { version = "1.0.130", default-features = false }
 serde_path_to_error = "0.1.17"
 url = "2.5.4"
 async-stream = { version = "0.3.2" }
-async-trait = { version = "0.1.51" }
-futures = { version = "0.3.17" }
+async-trait = { version = "0.1.88" }
+futures = { version = "0.3.31" }
+chrono = { version = "0.4.40", features = ["serde"] }
+log = "0.4.26"
+tokio = { version = "1.44.1", default-features = false, features = ["full"] }
