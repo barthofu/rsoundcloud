@@ -12,12 +12,12 @@ pub struct CommentSelf {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BasicComment {
     pub kind: String,
-    pub id: i32,
+    pub id: u64,
     pub body: String,
     pub created_at: DateTime<Utc>,
     pub timestamp: Option<i32>,
-    pub track_id: i32,
-    pub user_id: i32,
+    pub track_id: u64,
+    pub user_id: u64,
     #[serde(rename = "self")]
     pub self_ref: CommentSelf,
     pub user: BasicUser,

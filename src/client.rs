@@ -77,10 +77,10 @@ impl SoundCloudClient {
     }
 
     /// Convenience method to send POST requests related to an endpoint in the API.
-    pub async fn api_post(&self, url: &str, body: &Value) -> ClientResult<String> {
+    pub async fn api_post(&self, url: &str, query_params: Query, body: &Value) -> ClientResult<String> {
         let url = self.get_url(url);
         let headers = self.get_headers();
-        Ok(self.http_client.post(&url, Some(&headers), body).await?)
+        Ok(self.http_client.post(&url, Some(&headers), &self.get_params(query_params), body).await?)
     }
 
     /// Convenience method to send PUT requests related to an endpoint in the API.

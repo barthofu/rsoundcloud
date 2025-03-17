@@ -16,7 +16,7 @@ pub struct BaseTrack {
     pub duration: i32,
     pub embeddable_by: String,
     pub genre: Option<String>,
-    pub id: i32,
+    pub id: u64,
     pub kind: String,
     pub label_name: Option<String>,
     pub last_modified: DateTime<Utc>,
@@ -34,7 +34,7 @@ pub struct BaseTrack {
     pub tag_list: String,
     pub title: String,
     pub uri: String,
-    pub user_id: i32,
+    pub user_id: u64,
     pub display_date: String,
 
     // Track specific fields
@@ -87,7 +87,7 @@ pub struct BasicTrack {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MiniTrack {
-    pub id: i32,
+    pub id: u64,
     pub kind: String,
     pub monetization_model: String,
     pub policy: String,
@@ -101,7 +101,7 @@ pub struct MiniTrack {
 pub struct CommentTrack {
     pub artwork_url: Option<String>,
     pub caption: Option<String>,
-    pub id: i32,
+    pub id: u64,
     pub kind: String,
     pub last_modified: DateTime<Utc>,
     pub permalink: String,
@@ -112,7 +112,7 @@ pub struct CommentTrack {
     pub title: String,
     pub uri: String,
     pub urn: String,
-    pub user_id: i32,
+    pub user_id: u64,
     pub full_duration: i32,
     pub duration: i32,
     pub display_date: DateTime<Utc>,

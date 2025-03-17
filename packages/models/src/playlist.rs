@@ -13,7 +13,7 @@ pub struct BaseAlbumPlaylist {
     pub duration: i32,
     pub embeddable_by: String,
     pub genre: Option<String>,
-    pub id: i32,
+    pub id: u64,
     pub kind: String,
     pub label_name: Option<String>,
     pub last_modified: DateTime<Utc>,
@@ -31,7 +31,7 @@ pub struct BaseAlbumPlaylist {
     pub tag_list: String,
     pub title: String,
     pub uri: String,
-    pub user_id: i32,
+    pub user_id: u64,
     pub display_date: String,
     
     pub managed_by_feeds: bool,
@@ -46,7 +46,7 @@ pub struct BaseAlbumPlaylist {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AlbumPlaylist {
     #[serde(flatten)]
-    pub base: BaseAlbumPlaylist,
+    pub album_playlist: BaseAlbumPlaylist,
     pub user: User,
 }
 
@@ -54,7 +54,7 @@ pub struct AlbumPlaylist {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BasicAlbumPlaylist {
     #[serde(flatten)]
-    pub base: BaseAlbumPlaylist,
+    pub album_playlist: BaseAlbumPlaylist,
     pub user: BasicUser,
 }
 
@@ -64,7 +64,7 @@ pub struct AlbumPlaylistNoTracks {
     pub artwork_url: Option<String>,
     pub created_at: DateTime<Utc>,
     pub duration: i32,
-    pub id: i32,
+    pub id: u64,
     pub kind: String,
     pub last_modified: DateTime<Utc>,
     pub likes_count: Option<i32>,
@@ -78,7 +78,7 @@ pub struct AlbumPlaylistNoTracks {
     pub title: String,
     pub track_count: i32,
     pub uri: String,
-    pub user_id: i32,
+    pub user_id: u64,
     pub set_type: String,
     pub is_album: bool,
     pub published_at: Option<DateTime<Utc>>,
@@ -93,4 +93,11 @@ pub struct AlbumPlaylistNoTracks {
 pub enum TrackType {
     Basic(BasicTrack),
     Mini(MiniTrack),
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum PlaylistSharing {
+    Public,
+    Private,
 }

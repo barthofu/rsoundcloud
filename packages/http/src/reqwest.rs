@@ -95,6 +95,7 @@ impl ReqwestClient {
 
         // Configuring the request for the specific type (get/post/put/delete)
         request = add_data(request);
+        println!("Making request {:#?}", request);
 
         // Finally performing the request and handling the response
         log::info!("Making request {:?}", request);
@@ -117,9 +118,9 @@ impl BaseHttpClient for ReqwestClient {
         &self,
         url: &str,
         headers: Option<&Headers>,
-        payload: &Query,
+        query_params: &Query,
     ) -> Result<String, Self::Error> {
-        self.request(Method::GET, url, headers, |req| req.query(payload))
+        self.request(Method::GET, url, headers, |req| req.query(query_params))
             .await
     }
 
@@ -128,9 +129,10 @@ impl BaseHttpClient for ReqwestClient {
         &self,
         url: &str,
         headers: Option<&Headers>,
-        payload: &Value,
+        query_params: &Query,
+        body: &Value,
     ) -> Result<String, Self::Error> {
-        self.request(Method::POST, url, headers, |req| req.json(payload))
+        self.request(Method::POST, url, headers, |req| req.json(body).query(query_params))
             .await
     }
 

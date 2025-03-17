@@ -9,6 +9,7 @@ pub mod tracks;
 pub mod misc;
 pub mod me;
 pub mod search;
+pub mod playlists;
 
 // =============================================================================
 // Generic result

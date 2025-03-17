@@ -32,13 +32,14 @@ pub trait BaseHttpClient: Send + Default + Clone + fmt::Debug {
         &self,
         url: &str,
         headers: Option<&Headers>,
-        payload: &Query,
+        query_params: &Query,
     ) -> Result<String, Self::Error>;
 
     async fn post(
         &self,
         url: &str,
         headers: Option<&Headers>,
+        query_params: &Query,
         payload: &Value,
     ) -> Result<String, Self::Error>;
 

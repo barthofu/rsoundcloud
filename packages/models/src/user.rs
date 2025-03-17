@@ -10,7 +10,7 @@ pub struct BasicUser {
     pub first_name: String,
     pub followers_count: i32,
     pub full_name: String,
-    pub id: i32,
+    pub id: u64,
     pub kind: String,
     pub last_modified: DateTime<Utc>,
     pub last_name: String,
@@ -50,14 +50,14 @@ pub struct User {
 /// User with minimal information
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UltraBasicUser {
-    pub id: i32,
+    pub id: u64,
     pub username: String,
 }
 
 /// Deleted user
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MissingUser {
-    pub id: i32,
+    pub id: u64,
     pub kind: String,
 }
 
@@ -66,7 +66,7 @@ pub struct MissingUser {
 pub struct UserEmail {
     pub address: String,
     pub confirmed: bool,
-    pub id: i32,
+    pub id: u64,
     pub kind: String,
     pub last_modified: DateTime<Utc>,
     pub primary: bool,

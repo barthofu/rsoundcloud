@@ -1334,6 +1334,7 @@ dependencies = [
 name = "tests"
 version = "0.1.0"
 dependencies = [
+ "models",
  "rsoundcloud",
  "tokio",
 ]
