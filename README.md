@@ -1,6 +1,10 @@
 # rsoundcloud
 
-RSoundCloud is a Rust client library wrapping some of the internal v2 SoundCloud API (read/GET only methods). **Does not require an API Key**.
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/barthofu/rsoundcloud/build.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Crates.io Version](https://img.shields.io/crates/v/rsoundcloud)
+
+[`rsoundcloud`](https://crates.io/crates/rsoundcloud) is a Rust client library wrapping some of the internal v2 SoundCloud API (read/GET only methods). **Does not require an API Key**.
 
 > [!WARNING]
 > This is NOT the official [SoundCloud developer API]

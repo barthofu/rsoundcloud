@@ -5,6 +5,10 @@ on:
     branches:
       - main
   pull_request:
+  # allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  # allow the workflow to be re-used in other workflows
+  workflow_call:
 
 jobs:
   build:
@@ -28,7 +32,7 @@ jobs:
         run: cargo check --locked
       
       - name: Test
-        run: cargo test --locked
+        run: cargo test --locked -- --test-threads=1
       
       - name: Build
         run: cargo build --release
