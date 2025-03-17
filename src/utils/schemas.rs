@@ -16,8 +16,8 @@ impl CollectionParams {
     }
 
     pub fn add_to_query(&self, query: &mut Query) {
-        query.insert("limit".to_string(), self.limit.map(|l| l.to_string()).unwrap_or("25".to_string()));
-        query.insert("offset".to_string(), self.offset.map(|o| o.to_string()).unwrap_or("0".to_string()));
+        query.insert("limit".to_string(), self.limit.unwrap_or(25).to_string());
+        query.insert("offset".to_string(), self.offset.unwrap_or(0).to_string());
     }
 
     pub fn to_query(&self) -> Query {

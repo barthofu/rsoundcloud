@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::fmt;
 
+use async_trait::async_trait;
 use serde_json::Value;
 
 pub type Headers = HashMap<String, String>;
@@ -24,6 +25,7 @@ pub fn build_query<T: Into<String>>(params: impl IntoIterator<Item = (T, T)>) ->
 /// different ways (`Value::Null`, an empty `Value::Object`...), so this removes
 /// redundancy and edge cases (a `Some(Value::Null), for example, doesn't make
 /// much sense).
+#[async_trait]
 pub trait BaseHttpClient: Send + Default + Clone + fmt::Debug {
     type Error;
 

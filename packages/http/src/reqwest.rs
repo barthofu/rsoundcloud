@@ -7,6 +7,7 @@ use std::convert::TryInto;
 
 use std::time::Duration;
 
+use async_trait::async_trait;
 use reqwest::{Method, RequestBuilder};
 use serde_json::Value;
 
@@ -95,7 +96,6 @@ impl ReqwestClient {
 
         // Configuring the request for the specific type (get/post/put/delete)
         request = add_data(request);
-        println!("Making request {:#?}", request);
 
         // Finally performing the request and handling the response
         log::info!("Making request {:?}", request);
@@ -110,6 +110,7 @@ impl ReqwestClient {
     }
 }
 
+#[async_trait]
 impl BaseHttpClient for ReqwestClient {
     type Error = ReqwestError;
 
