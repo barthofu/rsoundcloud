@@ -14,12 +14,15 @@ permissions:
 
 jobs:
   cargo-deny:
+    name: Cargo Deny
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    
     permissions:
       checks: write
       contents: read
       issues: write
-    runs-on: ubuntu-latest
-    continue-on-error: true
+    
     steps:
       - uses: actions/checkout@v4
       - uses: EmbarkStudios/cargo-deny-action@v2
