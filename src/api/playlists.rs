@@ -1,8 +1,6 @@
 use async_trait::async_trait;
-use http::Query;
-use models::{playlist::{BasicAlbumPlaylist, PlaylistSharing}, user::User};
 
-use crate::{client::SoundCloudClient, need_authentication, utils::schemas::ResourceId, ClientResult};
+use crate::{client::SoundCloudClient, http::Query, models::{playlist::{BasicAlbumPlaylist, PlaylistSharing}, user::User}, need_authentication, utils::schemas::ResourceId, ClientResult};
 
 use super::{convert_collection, convert_result, misc::MiscApi};
 

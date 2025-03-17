@@ -1,10 +1,9 @@
-use http::{BaseHttpClient, Headers, HttpClient, Query};
+use super::http::{BaseHttpClient, Headers, HttpClient, Query};
 use reqwest::header;
 use regex::Regex;
-use serde::de::DeserializeOwned;
 use serde_json::Value;
 
-use crate::{api::{convert_collection, convert_result}, errors::{convert_404_to_invalid_id, ClientError}, ClientResult, API_BASE_URL, DEFAULT_USER_AGENT};
+use crate::{errors::ClientError, ClientResult, API_BASE_URL, DEFAULT_USER_AGENT};
 
 pub struct SoundCloudClient {
     http_client: HttpClient,
@@ -14,6 +13,10 @@ pub struct SoundCloudClient {
 }
 
 impl SoundCloudClient {
+
+    pub async fn default() -> ClientResult<Self> {
+        Self::new(None, None).await
+    }
 
     pub async fn new(client_id: Option<String>, auth_token: Option<String>) -> ClientResult<Self> {
         let client_id = match client_id {
@@ -146,16 +149,3 @@ impl SoundCloudClient {
         Ok(client_id)
     }
 }
-
-// pub trait SoundCloudClientUtils {
-
-//     fn is_track_url(url: &str) -> bool;
-//     fn is_playlist_url(url: &str) -> bool;
-//     fn is_user_url(url: &str) -> bool;
-// }
-
-// impl SoundCloudClientUtils for SoundCloudClient {
-
-//     fn is_track_url(url: &str) -> bool {
-//         url.contains("sound
-// }

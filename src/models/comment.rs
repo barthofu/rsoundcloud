@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-use crate::{track::CommentTrack, user::BasicUser};
+use super::{track::CommentTrack, user::BasicUser};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CommentSelf {

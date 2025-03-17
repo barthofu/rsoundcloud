@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::track::BasicTrack;
+use super::track::BasicTrack;
 
 /// Item in user's listen history
 #[derive(Debug, Clone, Serialize, Deserialize)]

@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-use crate::{track::{BasicTrack, MiniTrack}, user::{BasicUser, User}};
+use super::{track::{BasicTrack, MiniTrack}, user::{BasicUser, User}};
 
 /// Base structure for an album or playlist
 #[derive(Debug, Clone, Serialize, Deserialize)]

@@ -1,8 +1,6 @@
 use async_trait::async_trait;
-use http::Query;
-use models::{history::HistoryItem, user::User, StreamItem};
 
-use crate::{api::{convert_collection, convert_stream_items}, client::SoundCloudClient, need_authentication, utils::schemas::CollectionParams, ClientResult};
+use crate::{api::{convert_collection, convert_stream_items}, client::SoundCloudClient, http::Query, models::{history::HistoryItem, user::User, StreamItem}, need_authentication, utils::schemas::CollectionParams, ClientResult};
 
 use super::convert_result;
 

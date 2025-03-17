@@ -1,5 +1,5 @@
 use models::SearchItem;
-use rsoundcloud::{api::{me::MeApi, misc::MiscApi, playlists::PlaylistsApi, search::SearchApi, tracks::TracksApi, users::UsersApi}, client::SoundCloudClient, utils::schemas::{CollectionParams, ResourceId}};
+use rsoundcloud::{MiscApi, SoundCloudClient};
 
 const CLIENT_ID: &str = "f1TFyuaI8LX1Ybd1zvQRX8GpsNYcQ3Y5";
 const AUTH_TOKEN: &str = "2-296379-629391111-bZ3wiEjUEmNfgt";
@@ -15,7 +15,7 @@ async fn main() {
         Some(AUTH_TOKEN.to_string())).await.unwrap();
 
     // // Misc
-    // let res = client.resolve("https://on.soundcloud.com/Te19bUszQTiskJLF7").await.unwrap();
+    let res = client.resolve("https://on.soundcloud.com/Te19bUszQTiskJLF7").await.unwrap();
     
     // // Misc
     // let res = client.get_me().await.unwrap();

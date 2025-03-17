@@ -1,4 +1,4 @@
-use http::Query;
+use crate::http::Query;
 
 pub enum ResourceId {
     /// Id (e.g: `123456`)

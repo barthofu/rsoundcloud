@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-use crate::{message::Message, user::{BasicUser, MissingUser}};
+use super::{message::Message, user::{BasicUser, MissingUser}};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]

@@ -1,8 +1,6 @@
 use async_trait::async_trait;
-use http::Query;
-use models::{comment::Comment, conversation::Conversation, message::Message, playlist::BasicAlbumPlaylist, track::BasicTrack, user::{User, UserEmail}, web_profile::WebProfile, LikeItem, RepostItem, StreamItem};
 
-use crate::{client::SoundCloudClient, errors::{convert_404_to_invalid_id, ClientError}, need_authentication, utils::schemas::ResourceId, ClientResult};
+use crate::{client::SoundCloudClient, errors::{convert_404_to_invalid_id, ClientError}, http::Query, models::{comment::Comment, conversation::Conversation, message::Message, playlist::BasicAlbumPlaylist, track::BasicTrack, user::{User, UserEmail}, web_profile::WebProfile, LikeItem, RepostItem, SearchItem, StreamItem}, need_authentication, utils::schemas::ResourceId, ClientResult};
 
 use super::{convert_collection, convert_like_items, convert_repost_items, convert_result, convert_stream_items, misc::MiscApi};
 
@@ -89,7 +87,7 @@ impl UsersApi for SoundCloudClient {
     async fn get_user_by_username(&self, username: &str) -> ClientResult<User> {
         let resource = self.resolve(format!("https://soundcloud.com/{}", username).as_str()).await?;
         match resource {
-            models::SearchItem::User(user) => Ok(user),
+            SearchItem::User(user) => Ok(user),
             _ => Err(ClientError::NotFound)
         }
     }

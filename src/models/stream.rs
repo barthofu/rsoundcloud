@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-use crate::{playlist::BasicAlbumPlaylist, track::BasicTrack, user::BasicUser};
+use super::{playlist::BasicAlbumPlaylist, track::BasicTrack, user::BasicUser};
 
 /// Base structure for a stream item
 #[derive(Debug, Clone, Serialize, Deserialize)]

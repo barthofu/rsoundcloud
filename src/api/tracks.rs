@@ -1,8 +1,6 @@
 use async_trait::async_trait;
-use http::{build_query, Query};
-use models::{comment::BasicComment, playlist::BasicAlbumPlaylist, track::BasicTrack, user::User};
 
-use crate::{client::SoundCloudClient, errors::{convert_404_to_invalid_id, ClientError}, need_authentication, utils::schemas::ResourceId, ClientResult};
+use crate::{client::SoundCloudClient, errors::{convert_404_to_invalid_id, ClientError}, http::{build_query, HttpError, Query}, models::{comment::BasicComment, playlist::BasicAlbumPlaylist, track::BasicTrack, user::User}, need_authentication, utils::schemas::ResourceId, ClientResult};
 
 use super::{convert_collection, convert_result, misc::MiscApi};
 
@@ -126,13 +124,15 @@ impl TracksApi for SoundCloudClient {
         }
         
         let result = self.api_get(&uri, query_params).await
-            .map_err(|e| {
-                if let ClientError::Http(ref http_err) = e {
-                    if http_err.status() == Some(reqwest::StatusCode::NOT_FOUND) {
-                        return ClientError::Custom("Invalid id or track has no original download link".to_string());
+            .map_err(|error| {
+                if let ClientError::Http(ref http_err) = error {
+                    if let HttpError::StatusCode(response) = http_err.as_ref() {
+                        if response.status() == reqwest::StatusCode::NOT_FOUND {
+                            return ClientError::Custom("Invalid id or track has no original download link".to_string());
+                        }
                     }
                 }
-                e
+                error
             })?;
         convert_result(&result)
     }

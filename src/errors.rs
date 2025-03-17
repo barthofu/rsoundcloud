@@ -1,4 +1,4 @@
-use http::HttpError;
+use super::http::HttpError;
 use serde_json::Error;
 use thiserror::Error;
 
@@ -65,11 +65,13 @@ pub fn convert_serde_path_to_error(e: serde_path_to_error::Error<Error>) -> Clie
     }
 }
 
-pub fn convert_404_to_invalid_id(e: ClientError) -> ClientError {
-    if let ClientError::Http(ref http_err) = e {
-        if http_err.status() == Some(reqwest::StatusCode::NOT_FOUND) {
-            return ClientError::InvalidId;
+pub fn convert_404_to_invalid_id(error: ClientError) -> ClientError {
+    if let ClientError::Http(ref http_err) = error {
+        if let HttpError::StatusCode(response) = http_err.as_ref() {
+            if response.status() == reqwest::StatusCode::NOT_FOUND {
+                return ClientError::InvalidId;
+            }
         }
     }
-    e
+    error
 }

@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-use crate::{playlist::AlbumPlaylistNoTracks, track::BasicTrack};
+use super::{playlist::AlbumPlaylistNoTracks, track::BasicTrack};
 
 /// Like on a track
 #[derive(Debug, Clone, Serialize, Deserialize)]

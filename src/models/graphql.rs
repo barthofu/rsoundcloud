@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::comment::BasicComment;
+use super::comment::BasicComment;
 
 pub type InteractionTypeValue = String;
 

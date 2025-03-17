@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-use crate::visual::Visuals;
+use super::visual::Visuals;
 
 /// User with partial information
 #[derive(Debug, Clone, Serialize, Deserialize)]

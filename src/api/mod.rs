@@ -1,9 +1,8 @@
-use models::{LikeItem, RepostItem, SearchItem, StreamItem};
 use serde::de::DeserializeOwned;
 use serde_json::{Deserializer, Value};
 use serde_path_to_error::deserialize;
 
-use crate::{errors::{convert_serde_path_to_error, ClientError}, ClientResult};
+use crate::{errors::{convert_serde_path_to_error, ClientError}, models::{LikeItem, RepostItem, SearchItem, StreamItem}, ClientResult};
 
 pub mod me;
 pub mod misc;
@@ -16,7 +15,7 @@ pub mod users;
 // Reponse converters
 // =============================================================================
 
-// === Singl result
+// === Single result
 
 /// Converts a JSON response into its model.
 pub(crate) fn convert_result<T: DeserializeOwned>(input: &str) -> ClientResult<T> {
@@ -90,7 +89,7 @@ fn convert_search_item_value(json_value: &Value) -> ClientResult<SearchItem> {
 // === Stream Item
 
 /// Converts a JSON response into a `StreamItem`.
-pub(crate) fn convert_stream_item(input: &str) -> ClientResult<StreamItem> {
+pub(crate) fn _convert_stream_item(input: &str) -> ClientResult<StreamItem> {
     let json_value: Value = serde_json::from_str(input)?;
     convert_stream_item_value(&json_value)
 }
@@ -134,7 +133,7 @@ fn convert_stream_item_value(json_value: &Value) -> ClientResult<StreamItem> {
 // === Repost Item
 
 /// Converts a JSON response into a `RepostItem`.
-pub(crate) fn convert_repost_item<'a>(input: &'a str) -> ClientResult<RepostItem> {
+pub(crate) fn _convert_repost_item<'a>(input: &'a str) -> ClientResult<RepostItem> {
     let json_value: serde_json::Value = serde_json::from_str(input)?;
     convert_repost_item_value(&json_value)
 }
@@ -172,7 +171,7 @@ fn convert_repost_item_value(json_value: &Value) -> ClientResult<RepostItem> {
 // === Like Item
 
 /// Converts a JSON response into a `LikeItem`.
-pub(crate) fn convert_like_item<'a>(input: &'a str) -> ClientResult<LikeItem> {
+pub(crate) fn _convert_like_item<'a>(input: &'a str) -> ClientResult<LikeItem> {
     let json_value: serde_json::Value = serde_json::from_str(input)?;
     convert_like_item_value(&json_value)
 }

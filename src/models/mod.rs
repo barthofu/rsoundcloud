@@ -20,6 +20,10 @@ pub mod response;
 pub mod stream;
 pub mod web_profile;
 
+// ================================================================================
+// Union enums
+// ================================================================================
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum SearchItem {
     Track(Track),

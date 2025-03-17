@@ -1,8 +1,6 @@
 use async_trait::async_trait;
-use http::build_query;
-use models::{playlist::AlbumPlaylist, track::Track, user::User, SearchItem};
 
-use crate::{client::SoundCloudClient, errors::ClientError, ClientResult};
+use crate::{client::SoundCloudClient, errors::ClientError, http::build_query, models::{playlist::AlbumPlaylist, track::Track, user::User, SearchItem}, ClientResult};
 
 use super::convert_search_item;
 
