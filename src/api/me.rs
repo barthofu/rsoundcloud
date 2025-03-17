@@ -8,15 +8,15 @@ use super::convert_result;
 pub trait MeApi {
 
     /// Get current user's profile.
-    /// Needs authentication.
+    /// ! Need authentication.
     async fn get_me(&self) -> ClientResult<User>;
 
     /// Get the user's listening history.
-    /// Needs authentication.
+    /// ! Need authentication.
     async fn get_my_history(&self, collection_params: CollectionParams) -> ClientResult<Vec<HistoryItem>>;
 
     /// Get the user's stream of uploads and reposts.
-    /// Needs authentication.
+    /// ! Need authentication.
     async fn get_my_stream(&self, collection_params: CollectionParams) -> ClientResult<Vec<StreamItem>>;
 
 }

@@ -24,19 +24,52 @@ rsoundcloud = "0.1.0"
 
 ## Usage
 
+### Basic
+
+Here's a basic example of how to fetch a track's details:
 ```rust
 use rsoundcloud::SoundCloudClient;
 
 #[tokio::main]
 async fn main() {
     let client = SoundCloudClient::default();
-    let track = client.get_track("https://soundcloud.com/shmanii/beg-me-to-come-over").unwrap();
-    match track {
-        SearchItem::Track(track) => {
-            
-        }
-    }
-    println!("{:?}", track.await);
+    let track = client
+        .get_track(ResourceId::Url("https://soundcloud.com/shmanii/beg-me-to-come-over".to_string()))
+        .await;
+    println!("{:#?}", track);
 }
 ```
 
+### Authentication
+
+Some endpoints require authentication. You must provide a `SoundCloudClient` with a valid `OAuthToken` to access these endpoints.
+You can also provide a custom `client_id` as the first argument to `SoundCloudClient::new()`.
+
+```rust
+use rsoundcloud::{SoundCloudClient};
+
+#[tokio::main]
+async fn main() {
+    let client = SoundCloudClient::new(
+        Some("your_client_id".to_string()), 
+        Some("your_oauth_token".to_string()
+    ));
+    let me = client.get_me().await;
+    println!("{:#?}", me);
+}
+```
+
+Here's the list of endpoints that require authentication:
+- `get_me`
+- `get_my_history`
+- `get_my_streams`
+- `get_user_conversations`
+- `get_conversation_messages`
+- `get_unread_conversations`
+- `get_track_original_download_link`
+
+## License
+
+[MIT License](./LICENSE)
+
+Copyright (c) barthofu

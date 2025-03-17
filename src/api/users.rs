@@ -17,7 +17,7 @@ pub trait UsersApi {
     async fn get_user_comments(&self, user_id: ResourceId) -> ClientResult<Vec<Comment>>;
 
     /// Get user's email addresses. 
-    /// Requires authentication.
+    /// ! Needs authentication.
     async fn get_user_emails(&self, user_id: ResourceId) -> ClientResult<Vec<UserEmail>>;
 
     /// Get profiles featured by this user.
@@ -57,15 +57,15 @@ pub trait UsersApi {
     async fn get_user_links(&self, user_id: ResourceId) -> ClientResult<Vec<WebProfile>>;
 
     /// Get user's conversations
-    /// ! Requires authentication.
+    /// ! Needs authentication.
     async fn get_user_conversations(&self, user_id: ResourceId) -> ClientResult<Vec<Conversation>>;
 
     /// Get conversation messages.
-    /// ! Requires authentication.
+    /// ! Needs authentication.
     async fn get_conversation_messages(&self, user_id: ResourceId, conversation_id: u64) -> ClientResult<Vec<Message>>;
 
     /// Get unread conversations
-    /// ! Requires authentication.
+    /// ! Needs authentication.
     async fn get_unread_conversations(&self, user_id: ResourceId) -> ClientResult<Vec<Conversation>>;    
 
     // Utils

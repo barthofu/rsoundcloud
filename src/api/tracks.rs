@@ -23,9 +23,6 @@ pub trait TracksApi {
     /// Get comments on this track.
     async fn get_track_comments(&self, track_id: ResourceId, threaded: Option<u32>) -> ClientResult<Vec<BasicComment>>;
 
-    // /// Get comments on this track with interaction data. Requires authentication.
-    // async fn get_track_comments_with_interactions(&self, track_id: TrackId, threaded: Option<u32>) -> ClientResult<Vec<CommentWithInteractions>>;
-
     /// Get users who liked this track.
     async fn get_track_likers(&self, track_id: ResourceId) -> ClientResult<Vec<User>>;
 
@@ -36,7 +33,7 @@ pub trait TracksApi {
     async fn get_related_tracks(&self, track_id: ResourceId) -> ClientResult<Vec<BasicTrack>>;
 
     /// Get track original download link. If track is private, requires secret token to be provided (last part of secret URL).
-    /// Requires authentication.
+    /// ! Need authentication.
     async fn get_track_original_download_link(&self, track_id: ResourceId, secret_token: Option<String>) -> ClientResult<String>;
     
     // Utils
