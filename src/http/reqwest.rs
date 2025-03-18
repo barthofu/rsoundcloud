@@ -11,6 +11,8 @@ use async_trait::async_trait;
 use reqwest::{Method, RequestBuilder};
 use serde_json::Value;
 
+pub use reqwest::StatusCode;
+
 /// Custom enum that contains all the possible errors that may occur when using
 /// [`reqwest`]
 #[derive(thiserror::Error, Debug)]

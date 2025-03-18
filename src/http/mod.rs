@@ -8,5 +8,5 @@
 mod reqwest;
 mod common;
 
-pub use self::reqwest::{ReqwestClient as HttpClient, ReqwestError as HttpError};
+pub use self::reqwest::{ReqwestClient as HttpClient, ReqwestError as HttpError, StatusCode};
 pub use common::{BaseHttpClient, Form, Headers, Query, build_query};
