@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2025-03-18
+
+### 🚀 Features
+
+- *(http)* Status code struct export
+
+### 🐛 Bug Fixes
+
+- *(ci)* Disable auto security audit
+
 ## [0.2.0] - 2025-03-18
 
 ### 🚀 Features
