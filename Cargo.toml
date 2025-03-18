@@ -1,7 +1,7 @@
 [package]
 name = "rsoundcloud"
 description = "A SoundCloud API client"
-version = "0.2.1"
+version = "0.2.2"
 authors = [
     "Bartholomé Gili <dev.bartho@gmail.com>"
 ]

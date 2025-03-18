@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2025-03-18
+
+### 🚀 Features
+
+- *(api/search)* Narrow down return type of specialized methods
+
 ## [0.2.1] - 2025-03-18
 
 ### 🚀 Features
@@ -11,6 +17,10 @@ All notable changes to this project will be documented in this file.
 ### 🐛 Bug Fixes
 
 - *(ci)* Disable auto security audit
+
+### ⚙️ Miscellaneous Tasks
+
+- *(release)* V0.2.1
 
 ## [0.2.0] - 2025-03-18
 
