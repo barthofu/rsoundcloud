@@ -2,11 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.3] - 2025-03-18
+
+### 🐛 Bug Fixes
+
+- *(api/tracks)* Limit `get_tracks` ids input to 50 to avoid errors
+
 ## [0.2.2] - 2025-03-18
 
 ### 🚀 Features
 
 - *(api/search)* Narrow down return type of specialized methods
+
+### ⚙️ Miscellaneous Tasks
+
+- *(release)* V0.2.2
 
 ## [0.2.1] - 2025-03-18
 
