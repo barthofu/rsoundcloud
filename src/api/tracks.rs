@@ -12,6 +12,7 @@ pub trait TracksApi {
 
     /// Returns the tracks with the given track_ids.
     /// Can be used to get track info for hidden tracks in a hidden playlist.
+    /// Limit: 50 track_ids.
     async fn get_tracks(&self, track_ids: Vec<u64>, playlist_id: Option<u64>, playlist_secret_token: Option<String>) -> ClientResult<Vec<Track>>;
 
     /// Get albums that this track is in.
@@ -53,6 +54,9 @@ impl TracksApi for SoundCloudClient {
     }
 
     async fn get_tracks(&self, track_ids: Vec<u64>, playlist_id: Option<u64>, playlist_secret_token: Option<String>) -> ClientResult<Vec<Track>> {
+        if track_ids.len() > 50 {
+            return Err(ClientError::Custom("Limit of 50 track_ids exceeded".to_string()));
+        }
         let uri = format!("/tracks");
         let mut query_params = Query::new();
         query_params.insert("ids".to_string(), track_ids.iter().map(|id| id.to_string()).collect::<Vec<String>>().join(","));

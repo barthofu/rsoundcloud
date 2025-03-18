@@ -42,8 +42,12 @@ impl PlaylistsApi for SoundCloudClient {
             TrackType::Mini(t) => t.id,
         }).collect::<Vec<_>>();
         
-        let tracks = self.get_tracks(track_ids, None, None).await;
-        tracks   
+        let mut tracks: Vec<Track> = Vec::new();
+        for chunk in track_ids.chunks(50) {
+            let chunk_tracks = self.get_tracks(chunk.to_vec(), None, None).await?;
+            tracks.extend(chunk_tracks);
+        } 
+        Ok(tracks)   
     }
     
 
