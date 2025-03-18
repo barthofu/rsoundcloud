@@ -72,7 +72,6 @@ impl ReqwestClient {
 
         // Configuring the request for the specific type (get/post/put/delete)
         request = add_data(request);
-        println!("{:#?}", request);
 
         // Finally performing the request and handling the response
         log::info!("Making request {:?}", request);

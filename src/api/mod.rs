@@ -179,7 +179,6 @@ pub(crate) fn _convert_like_item<'a>(input: &'a str) -> ClientResult<LikeItem> {
 /// Converts a JSON response into a `Vec<LikeItem>`.
 pub(crate) fn convert_like_items(input: &str) -> ClientResult<Vec<LikeItem> > {
     let json_value: Value = serde_json::from_str(input)?;
-    // println!("{:#?}", json_value);
 
     let collection = json_value.get("collection")
         .ok_or_else(|| ClientError::Custom("No `collection` field in the JSON".to_string()))?
