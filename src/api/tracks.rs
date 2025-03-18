@@ -1,6 +1,6 @@
 use async_trait::async_trait;
 
-use crate::{client::SoundCloudClient, errors::{convert_404_to_invalid_id, ClientError}, http::{build_query, HttpError, Query}, models::{comment::BasicComment, playlist::BasicAlbumPlaylist, track::BasicTrack, user::User}, need_authentication, utils::schemas::ResourceId, ClientResult};
+use crate::{client::SoundCloudClient, errors::{convert_404_to_invalid_id, ClientError}, http::{build_query, HttpError, Query}, models::{comment::BasicComment, playlist::BasicAlbumPlaylist, track::{BasicTrack, Track}, user::User}, need_authentication, utils::schemas::ResourceId, ClientResult};
 
 use super::{convert_collection, convert_result, misc::MiscApi};
 
@@ -8,11 +8,11 @@ use super::{convert_collection, convert_result, misc::MiscApi};
 pub trait TracksApi {
 
     /// Returns the track with the given track_id.
-    async fn get_track(&self, track_id: ResourceId) -> ClientResult<BasicTrack>;
+    async fn get_track(&self, track_id: ResourceId) -> ClientResult<Track>;
 
     /// Returns the tracks with the given track_ids.
     /// Can be used to get track info for hidden tracks in a hidden playlist.
-    async fn get_tracks(&self, track_ids: Vec<u64>, playlist_id: Option<u64>, playlist_secret_token: Option<String>) -> ClientResult<Vec<BasicTrack>>;
+    async fn get_tracks(&self, track_ids: Vec<u64>, playlist_id: Option<u64>, playlist_secret_token: Option<String>) -> ClientResult<Vec<Track>>;
 
     /// Get albums that this track is in.
     async fn get_track_albums(&self, track_id: ResourceId) -> ClientResult<Vec<BasicAlbumPlaylist>>;
@@ -45,14 +45,14 @@ pub trait TracksApi {
 #[async_trait]
 impl TracksApi for SoundCloudClient {
 
-    async fn get_track(&self, track_id: ResourceId) -> ClientResult<BasicTrack> {
+    async fn get_track(&self, track_id: ResourceId) -> ClientResult<Track> {
         let uri = format!("/tracks/{}", self.extract_track_id(track_id).await?);
         
         let result = self.api_get(&uri, Query::new()).await.map_err(convert_404_to_invalid_id)?;
         convert_result(&result)
     }
 
-    async fn get_tracks(&self, track_ids: Vec<u64>, playlist_id: Option<u64>, playlist_secret_token: Option<String>) -> ClientResult<Vec<BasicTrack>> {
+    async fn get_tracks(&self, track_ids: Vec<u64>, playlist_id: Option<u64>, playlist_secret_token: Option<String>) -> ClientResult<Vec<Track>> {
         let uri = format!("/tracks");
         let mut query_params = Query::new();
         query_params.insert("ids".to_string(), track_ids.iter().map(|id| id.to_string()).collect::<Vec<String>>().join(","));

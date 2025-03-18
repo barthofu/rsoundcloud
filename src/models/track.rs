@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 use chrono::{DateTime, Utc};
 
-use super::{user::{UltraBasicUser, User}, visual::Visuals};
+use super::{user::{BasicUser, UltraBasicUser}, visual::Visuals};
 
 // ==================================================
 // Track
@@ -57,6 +57,7 @@ pub struct BaseTrack {
     pub track_authorization: String,
     pub monetization_model: String,
     pub policy: String,
+    pub publisher_metadata: Option<PublisherMetadata>,
 }
 
 impl BaseTrack {
@@ -73,7 +74,7 @@ impl BaseTrack {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Track {
-    pub user: User,
+    pub user: BasicUser,
     #[serde(flatten)]
     pub track: BaseTrack,
 }
@@ -153,7 +154,9 @@ pub struct Media {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PublisherMetadata {
-    pub id: String,
+    pub id: u64,
     pub urn: String,
-    pub contains_music: bool,
+    pub artist: Option<String>,
+    pub contains_music: Option<bool>,
+    pub isrc: Option<String>,
 }
