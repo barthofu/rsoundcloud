@@ -1,6 +1,6 @@
 use async_trait::async_trait;
 
-use crate::{client::SoundCloudClient, http::build_query, models::{track::Track, SearchItem}, utils::schemas::CollectionParams, ClientResult};
+use crate::{client::SoundCloudClient, http::build_query, models::{playlist::AlbumPlaylist, track::Track, user::User, SearchItem}, utils::schemas::CollectionParams, ClientResult};
 
 use super::{convert_collection, convert_search_items};
 
@@ -11,16 +11,16 @@ pub trait SearchApi {
     async fn search(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>>;
     
     /// Search for tracks
-    async fn search_tracks(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>>;
+    async fn search_tracks(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<Track>>;
     
     /// Search for users
-    async fn search_users(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>>;
+    async fn search_users(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<User>>;
     
     /// Search for albums
-    async fn search_albums(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>>;
+    async fn search_albums(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<AlbumPlaylist>>;
     
     /// Search for playlists
-    async fn search_playlists(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>>;
+    async fn search_playlists(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<AlbumPlaylist>>;
 
     /// Get most recent tracks for this tag
     async fn get_tag_tracks_recent(&self, tag: String, collection_params: CollectionParams) -> ClientResult<Vec<Track>>;
@@ -39,20 +39,32 @@ impl SearchApi for SoundCloudClient {
         self.generic_search(query, collection_params, "/search").await
     }
 
-    async fn search_tracks(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>> {
-        self.generic_search(query, collection_params, "/search/tracks").await
+    async fn search_tracks(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<Track>> {
+        Ok(self.generic_search(query, collection_params, "/search/tracks").await?
+            .into_iter()
+            .filter_map(|item| if let SearchItem::Track(track) = item { Some(track) } else { None })
+            .collect())
     }
 
-    async fn search_users(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>> {
-        self.generic_search(query, collection_params, "/search/users").await
+    async fn search_users(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<User>> {
+        Ok(self.generic_search(query, collection_params, "/search/users").await?
+            .into_iter()
+            .filter_map(|item| if let SearchItem::User(user) = item { Some(user) } else { None })
+            .collect())
     }
 
-    async fn search_albums(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>> {
-        self.generic_search(query, collection_params, "/search/albums").await
+    async fn search_albums(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<AlbumPlaylist>> {
+        Ok(self.generic_search(query, collection_params, "/search/albums").await?
+            .into_iter()
+            .filter_map(|item| if let SearchItem::AlbumPlaylist(album) = item { Some(album) } else { None })
+            .collect())
     }
 
-    async fn search_playlists(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<SearchItem>> {
-        self.generic_search(query, collection_params, "/search/playlists_without_albums").await
+    async fn search_playlists(&self, query: String, collection_params: CollectionParams) -> ClientResult<Vec<AlbumPlaylist>> {
+        Ok(self.generic_search(query, collection_params, "/search/playlists").await?
+            .into_iter()
+            .filter_map(|item| if let SearchItem::AlbumPlaylist(playlist) = item { Some(playlist) } else { None })
+            .collect())
     }
 
     async fn get_tag_tracks_recent(&self, tag: String, collection_params: CollectionParams) -> ClientResult<Vec<Track>> {
