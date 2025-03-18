@@ -2,11 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [0.2.0] - 2025-03-18
+
+### 🚀 Features
+
+- *(tooling)* Git-cliff
+- *(api/tracks)* `get_playlist_tracks` method
+- *(tooling)* Cargo shell aliases
 
 ### 🐛 Bug Fixes
 
 - Ci and readme
+- *(models/tracks)* Confusion between track and basic track
+
+### 🧪 Testing
+
+- Add missing `misc` tests
+
+### ⚙️ Miscellaneous Tasks
+
+- Remove unwanted println!()
+- *(release)* V0.2.0
 
 ## [0.1.0] - 2025-03-17
 
