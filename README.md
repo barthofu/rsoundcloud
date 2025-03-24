@@ -7,7 +7,7 @@
 [`rsoundcloud`](https://crates.io/crates/rsoundcloud) is a Rust client library wrapping some of the internal v2 SoundCloud API (read/GET only methods). **Does not require an API Key**.
 
 > [!WARNING]
-> This is NOT the official [SoundCloud developer API]
+> This is NOT the official [SoundCloud developer API](https://developers.soundcloud.com/docs/api/guide)
 >
 > SoundCloud is not accepting application registration requests anymore. I made this library so developers can use SoundCloud's internal API for their projects.
 
@@ -23,7 +23,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-rsoundcloud = "0.1.0"
+rsoundcloud = "0.2.3"
 ```
 
 ## Usage
