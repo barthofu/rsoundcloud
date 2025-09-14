@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.4] - 2025-09-14
+
+### 🚀 Features
+
+- *(http)* Support for custom client
+
+### 🐛 Bug Fixes
+
+- Readme
+
+### ⚙️ Miscellaneous Tasks
+
+- Update LICENSE
+
 ## [0.2.3] - 2025-03-18
 
 ### 🐛 Bug Fixes
