@@ -19,13 +19,21 @@ impl SoundCloudClient {
     }
 
     pub async fn new(client_id: Option<String>, auth_token: Option<String>) -> ClientResult<Self> {
+        Self::with_http_client(HttpClient::default(), client_id, auth_token).await
+    }
+
+    pub async fn with_http_client(
+        http_client: HttpClient,
+        client_id: Option<String>,
+        auth_token: Option<String>,
+    ) -> ClientResult<Self> {
         let client_id = match client_id {
             Some(id) => id,
             None => Self::generate_client_id().await?,
         };
         
         let mut instance = SoundCloudClient {
-            http_client: HttpClient::default(),
+            http_client,
             client_id,
             auth_token: None,
             authorization: None,

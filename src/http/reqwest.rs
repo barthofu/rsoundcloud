@@ -47,6 +47,25 @@ impl Default for ReqwestClient {
 }
 
 impl ReqwestClient {
+    /// Create a new ReqwestClient with a custom reqwest::Client
+    pub fn new(client: reqwest::Client) -> Self {
+        Self { client }
+    }
+
+    /// Create a new ReqwestClient with a custom ClientBuilder configuration
+    pub fn with_builder<F>(configure: F) -> Result<Self, reqwest::Error>
+    where
+        F: FnOnce(reqwest::ClientBuilder) -> reqwest::ClientBuilder,
+    {
+        let builder = reqwest::ClientBuilder::new()
+            .timeout(Duration::from_secs(10));
+        
+        let client = configure(builder).build()?;
+        Ok(Self { client })
+    }
+}
+
+impl ReqwestClient {
     async fn request<D>(
         &self,
         method: Method,

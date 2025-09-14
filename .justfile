@@ -1,5 +1,5 @@
 shell:
-    nix develop -c zsh
+    nix develop --extra-experimental-features nix-command --extra-experimental-features flakes -c zsh
 
 test:
     cargo test -- --test-threads=1

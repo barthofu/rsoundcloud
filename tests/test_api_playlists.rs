@@ -4,8 +4,8 @@ use common::get_client;
 use rsoundcloud::{ResourceId, PlaylistsApi};
 
 const PLAYLIST_ID: ResourceId = ResourceId::Id(1847484585);
-const PLAYLIST_URL: &str = "https://soundcloud.com/bartho-az/sets/future-guinguette";
-const PLAYLIST_URI: &str = "bartho-az/sets/future-guinguette";
+const PLAYLIST_URL: &str = "https://soundcloud.com/barthohm/sets/future-guinguette";
+const PLAYLIST_URI: &str = "barthohm/sets/future-guinguette";
 
 #[tokio::test]
 async fn client_can_get_playlist_from_id() {

@@ -5,7 +5,7 @@ use rsoundcloud::MiscApi;
 
 const TRACK_URL: &str = "https://soundcloud.com/shmanii/beg-me-to-come-over";
 const USER_URL: &str = "https://soundcloud.com/shmanii";
-const PLAYLIST_URL: &str = "https://soundcloud.com/bartho-az/sets/future-guinguette";
+const PLAYLIST_URL: &str = "https://soundcloud.com/barthohm/sets/future-guinguette";
 
 #[tokio::test]
 async fn client_can_resolve() {
