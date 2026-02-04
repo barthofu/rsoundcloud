@@ -19,7 +19,7 @@ lto = true
 codegen-units = 1
 
 [dependencies]
-reqwest = { version = "0.12.23", default-features = false, features = ["json", "socks", "rustls-tls"] }
+reqwest = { version = "0.12.23", default-features = false, features = ["json", "socks", "rustls-tls", "cookies"] }
 regex = "1.11.2"
 thiserror = "2.0.16"
 serde = { version = "1.0.221", features = ["derive"] }
