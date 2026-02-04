@@ -3,7 +3,7 @@ use reqwest::header;
 use regex::Regex;
 use serde_json::Value;
 
-use crate::{errors::ClientError, ClientResult, API_BASE_URL, DEFAULT_USER_AGENT};
+use crate::{API_BASE_URL, ASSET_URL_REGEX, BASE_URL, CLIENT_ID_REGEX, ClientResult, DEFAULT_USER_AGENT, errors::ClientError};
 
 pub struct SoundCloudClient {
     http_client: HttpClient,
@@ -130,30 +130,33 @@ impl SoundCloudClient {
         let http_client = HttpClient::default();
 
         let text = http_client
-            .get("https://soundcloud.com", None, &Query::new())
+            .get(BASE_URL, None, &Query::new())
             .await?;
         
-        let asset_regex = Regex::new("src=\"(https://a-v2.sndcdn.com/assets/0-[^.]+.js)\"")
+        let asset_regex = Regex::new(ASSET_URL_REGEX)
             .map_err(|_| ClientError::ClientIDGenerationFailed)?;
-        let client_id_regex = Regex::new("client_id:\"([^\"]+)\"")
+        let client_id_regex = Regex::new(CLIENT_ID_REGEX)
             .map_err(|_| ClientError::ClientIDGenerationFailed)?;
-        
-        let asset_url = asset_regex
-            .captures(&text)
-            .and_then(|caps| caps.get(1))
-            .map(|m| m.as_str().to_string())
-            .ok_or(ClientError::ClientIDGenerationFailed)?;
-        
-        let text = http_client
-            .get(&asset_url, None, &Query::new())
-            .await?;
-        
-        let client_id = client_id_regex
-            .captures(&text)
-            .and_then(|caps| caps.get(1))
-            .map(|m| m.as_str().to_string())
-            .ok_or(ClientError::ClientIDGenerationFailed)?;
-        
-        Ok(client_id)
+
+        let asset_urls: Vec<String> = asset_regex
+            .captures_iter(&text)
+            .filter_map(|caps| caps.get(1).map(|m| m.as_str().to_string()))
+            .collect();
+
+        if asset_urls.is_empty() {
+            return Err(ClientError::ClientIDGenerationFailed.into());
+        }
+
+        for asset_url in asset_urls {
+            let text = http_client.get(&asset_url, None, &Query::new()).await?;
+
+            if let Some(caps) = client_id_regex.captures(&text) {
+                if let Some(m) = caps.get(1) {
+                    return Ok(m.as_str().to_string());
+                }
+            }
+        }
+
+        Err(ClientError::ClientIDGenerationFailed.into())
     }
 }
