@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.5] - 2026-02-04
+
+### 🚀 Features
+
+- *(docs)* Proxy usage
+- *(http)* Enable cookie support and add request retry logic
+
+### 🐛 Bug Fixes
+
+- *(client)* Client_id retrieval logic
+
+### ⚙️ Miscellaneous Tasks
+
+- *(release)* V0.2.5
+
 ## [0.2.4] - 2025-09-14
 
 ### 🚀 Features
@@ -15,12 +30,17 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Update LICENSE
+- *(release)* V0.2.4
 
 ## [0.2.3] - 2025-03-18
 
 ### 🐛 Bug Fixes
 
 - *(api/tracks)* Limit `get_tracks` ids input to 50 to avoid errors
+
+### ⚙️ Miscellaneous Tasks
+
+- *(release)* V0.2.3
 
 ## [0.2.2] - 2025-03-18
 
