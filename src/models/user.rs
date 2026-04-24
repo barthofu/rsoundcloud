@@ -33,7 +33,7 @@ pub struct User {
     #[serde(flatten)]
     pub user: BasicUser,
     pub comments_count: i32,
-    pub created_at: DateTime<Utc>,
+    pub created_at: Option<DateTime<Utc>>,
     pub creator_subscriptions: Vec<CreatorSubscription>,
     pub creator_subscription: CreatorSubscription,
     pub description: Option<String>,

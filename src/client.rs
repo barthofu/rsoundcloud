@@ -29,7 +29,7 @@ impl SoundCloudClient {
     ) -> ClientResult<Self> {
         let client_id = match client_id {
             Some(id) => id,
-            None => Self::generate_client_id().await?,
+            None => Self::generate_client_id_with(&http_client).await?,
         };
         
         let mut instance = SoundCloudClient {
@@ -128,7 +128,10 @@ impl SoundCloudClient {
 
     pub async fn generate_client_id() -> ClientResult<String> {
         let http_client = HttpClient::default();
+        Self::generate_client_id_with(&http_client).await
+    }
 
+    pub async fn generate_client_id_with(http_client: &HttpClient) -> ClientResult<String> {
         let text = http_client
             .get(BASE_URL, None, &Query::new())
             .await?;
