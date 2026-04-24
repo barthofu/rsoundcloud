@@ -23,7 +23,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-rsoundcloud = "0.2.3"
+rsoundcloud = "0.2.6"
 ```
 
 ## Usage
