@@ -24,6 +24,7 @@ Add the following to your `Cargo.toml`:
 ```toml
 [dependencies]
 rsoundcloud = "0.2.6"
+tokio = { version = "1", features = ["full"] }
 ```
 
 ## Usage
@@ -32,14 +33,15 @@ rsoundcloud = "0.2.6"
 
 Here's a basic example of how to fetch a track's details:
 ```rust
-use rsoundcloud::SoundCloudClient;
+use rsoundcloud::{ResourceId, SoundCloudClient, TracksApi};
 
 #[tokio::main]
 async fn main() {
-    let client = SoundCloudClient::default();
-    let track = client
-        .get_track(ResourceId::Url("https://soundcloud.com/shmanii/beg-me-to-come-over".to_string()))
-        .await;
+    let client = SoundCloudClient::default().await.unwrap();
+
+    let url = "https://soundcloud.com/shmanii/beg-me-to-come-over".to_string();
+    let track = client.get_track(ResourceId::Url(url)).await;
+
     println!("{:#?}", track);
 }
 ```
